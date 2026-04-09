@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                         role: "user",
                         content: "*You are playing a drum judge game based on AI that scored. Answer this situation/question with a short, safe, on-topic, calm, logic, appropriate for all ages, and likely not an AI response (max 75 characters)*: " + question
                     }],
-                    max_tokens: 100
+                    max_tokens: 1000
                 })
             }
         )
