@@ -18,7 +18,7 @@ export default async function handler(req, res) {
                     model: "llama-3.1-8b-instant",
                     messages: [{
                         role: "user",
-                        content: "*You are playing a drum judge game in roblox and using AI scored and its sensitive. Answer this situation/question with a short, safety, on-topic, calm, logic, appropriate for all ages, and likely not an AI response (max 75 characters)*: " + question
+                        content: "*You are playing a drum judge game in roblox using AI to score and its very sensitive. Answer this situation/question with a short, safe, on-topic, joy, calm, logic, creative, appropriate for all ages, likely not an AI response (max 75 characters)*: " + question
                     }],
                     max_tokens: 1000
                 })
