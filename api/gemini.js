@@ -22,7 +22,12 @@ export default async function handler(req, res) {
         )
 
         const data = await response.json()
-        const answer = data.candidates?.[0]?.content?.parts?.[0]?.text || "I would panic obviously"
+        const answer = data.candidates?.[0]?.content?.parts?.[0]?.text
+
+        if (!answer) {
+            return res.status(500).json({ error: "No answer from Gemini", raw: data })
+        }
+
         return res.status(200).json({ answer })
 
     } catch (err) {
