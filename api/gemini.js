@@ -18,7 +18,7 @@ export default async function handler(req, res) {
                     model: "llama-3.1-8b-instant",
                     messages: [{
                         role: "user",
-                        content: "You are playing a funny party game. Answer this situation/question with a short, safe, calm, smart, logic, appropriate but funny response (max 100 characters): " + question
+                        content: "You are playing a funny party game. Answer this situation/question with a short, safe, calm, smart, logic, appropriate but funny response (max 75 characters): " + question
                     }],
                     max_tokens: 100
                 })
