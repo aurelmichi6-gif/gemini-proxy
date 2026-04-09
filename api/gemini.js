@@ -18,7 +18,7 @@ export default async function handler(req, res) {
                     model: "llama-3.1-8b-instant",
                     messages: [{
                         role: "user",
-                        content: "*You are playing a drum judge game based on AI gemini that scored. Answer this situation/question with a short, safe, on-topic, calm, logic, appropriate for all ages, and likely not an AI response (max 75 characters)*: " + question
+                        content: "*You are playing a drum judge game based on AI that scored. Answer this situation/question with a short, safe, on-topic, calm, logic, appropriate for all ages, and likely not an AI response (max 75 characters)*: " + question
                     }],
                     max_tokens: 100
                 })
