@@ -1,8 +1,1 @@
-{
-    "functions": {
-        "api/gemini.js": {
-            "memory": 128,
-            "maxDuration": 10
-        }
-    }
-}
+
