@@ -17,7 +17,7 @@ export default async function handler(req, res) {
                     model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [{
                         role: "user",
-                        content: " answer with honest "
+                        content: " You are playing a game against gemini AI to test your knowledge. Answer this situation/question with always respect, simple, clear, kind, safe, on-topic, logic, human, and appropriate for roblox response (max 100 characters): " + question "
                     }],
                     max_tokens: 512,
                     temperature: 1.00,
