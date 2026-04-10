@@ -18,7 +18,7 @@ export default async function handler(req, res) {
                     model: "llama-3.1-8b-instant",
                     messages: [{
                         role: "user",
-                        content: "You are playing a game against gemini AI in roblox. Answer this situation/question with a simple, clear, kind, safe, on-topic, calm, logic, non vague, human, and appropriate for roblox response (max 100 characters): " + question
+                        content: "You are playing a game against player in roblox. Answer this situation/question with a simple, clear, kind, safe, on-topic, calm, logic, non vague, human, and appropriate for roblox response (max 100 characters): " + question
                     }],
                     max_tokens: 1000
                 })
