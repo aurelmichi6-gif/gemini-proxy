@@ -19,7 +19,7 @@ export default async function handler(req, res) {
                         role: "user",
                         content: " You are playing a game against gemini AI to test your knowledge. Answer this situation/question with always respect, simple, clear, kind, safe, on-topic, logic, human, and appropriate for roblox response (max 100 characters): " + question
                     }],
-                    max_tokens: 512,
+                    max_tokens: 1000,
                     temperature: 1.00,
                     top_p: 1.00,
                     frequency_penalty: 0.00,
