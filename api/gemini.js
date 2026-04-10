@@ -22,8 +22,8 @@ export default async function handler(req, res) {
                     max_tokens: 1000,
                     temperature: 1.00,
                     top_p: 1.00,
-                    frequency_penalty: 0.00,
-                    presence_penalty: 0.00,
+                    frequency_penalty: 0.15,
+                    presence_penalty: 0.15,
                     stream: false
                 })
             }
