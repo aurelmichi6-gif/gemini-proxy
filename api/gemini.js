@@ -1,4 +1,6 @@
 export default async function handler(req, res) {
+    const apiKey = process.env.NVIDIA_API_KEY  // ← dari env variable
+
     const question = req.method === "POST" ? req.body?.question : req.query?.question
     if (!question) {
         return res.status(400).json({ error: "No question provided" })
@@ -10,14 +12,14 @@ export default async function handler(req, res) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer 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",
+                    "Authorization": "Bearer " + apiKey,
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
                     model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [{
                         role: "user",
-                        content: " I will give you a question, You have to answer this situation/question with short, direct, clear, kind, safe, on-topic, logic, creative, non sci-fi, non vague: " + question
+                        content: "I will give you a question, You have to answer this situation/question with short, direct, clear, kind, safe, on-topic, logic, creative, non sci-fi, non vague: " + question
                     }],
                     max_tokens: 1000,
                     temperature: 1.00,
