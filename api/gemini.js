@@ -17,7 +17,7 @@ export default async function handler(req, res) {
                     model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [{
                         role: "user",
-                        content: " I will give you a question. You have to answer this situation/question with short, direct, clear, kind, safe, on-topic, logic, creative, non sci-fi, non vague, (max 7 words): " + question
+                        content: " I will give you a question. You have to answer this situation/question with short, direct, clear, kind, safe, on-topic, logic, creative, non sci-fi, non vague, (max 10 words): " + question
                     }],
                     max_tokens: 1000,
                     temperature: 1.00,
