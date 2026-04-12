@@ -1,10 +1,17 @@
 export default async function handler(req, res) {
-    const apiKey = process.env.NVIDIA_API_KEY  // ← dari env variable
+    const apiKey = process.env.NVIDIA_API_KEY
 
     const question = req.method === "POST" ? req.body?.question : req.query?.question
+    const customPrompt = req.method === "POST" ? req.body?.prompt : req.query?.prompt
+
     if (!question) {
         return res.status(400).json({ error: "No question provided" })
     }
+
+    const systemPrompt = customPrompt
+        ? customPrompt
+        : "Answer this question with short, direct, clear, on-topic answers:"
+
     try {
         const response = await fetch(
             "https://integrate.api.nvidia.com/v1/chat/completions",
@@ -19,7 +26,7 @@ export default async function handler(req, res) {
                     model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [{
                         role: "user",
-                        content: "I will give you a question, You have to answer this situation/question with short, direct, clear, kind, safe, on-topic, logic, creative, non sci-fi, non vague: " + question
+                        content: systemPrompt + " " + question
                     }],
                     max_tokens: 1000,
                     temperature: 1.00,
