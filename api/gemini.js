@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
     const apiKey = process.env.NVIDIA_API_KEY
-
     const question = req.method === "POST" ? req.body?.question : req.query?.question
     const customPrompt = req.method === "POST" ? req.body?.prompt : req.query?.prompt
 
@@ -23,17 +22,16 @@ export default async function handler(req, res) {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "meta/llama-4-maverick-17b-128e-instruct",
+                    model: "google/gemma-4-31b-it",
                     messages: [{
                         role: "user",
                         content: systemPrompt + " " + question
                     }],
-                    max_tokens: 1000,
+                    max_tokens: 16384,
                     temperature: 1.00,
-                    top_p: 1.00,
-                    frequency_penalty: 0.00,
-                    presence_penalty: 0.00,
-                    stream: false
+                    top_p: 0.95,
+                    stream: false,
+                    chat_template_kwargs: { enable_thinking: true }
                 })
             }
         )
