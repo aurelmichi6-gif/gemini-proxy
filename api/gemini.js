@@ -12,6 +12,9 @@ export default async function handler(req, res) {
         : "Answer this question with short, direct, clear, on-topic answers:"
 
     try {
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 55000)
+
         const response = await fetch(
             "https://integrate.api.nvidia.com/v1/chat/completions",
             {
@@ -22,19 +25,21 @@ export default async function handler(req, res) {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "google/gemma-4-31b-it",
+                    model: "minimaxai/minimax-m2.7",
                     messages: [{
                         role: "user",
                         content: systemPrompt + " " + question
                     }],
-                    max_tokens: 16384,
-                    temperature: 1.00,
+                    max_tokens: 8192,
+                    temperature: 1,
                     top_p: 0.95,
-                    stream: false,
-                    chat_template_kwargs: { enable_thinking: true }
-                })
+                    stream: false
+                }),
+                signal: controller.signal
             }
         )
+
+        clearTimeout(timeout)
         const data = await response.json()
         const answer = data.choices?.[0]?.message?.content
         if (!answer) {
@@ -42,6 +47,9 @@ export default async function handler(req, res) {
         }
         return res.status(200).json({ answer })
     } catch (err) {
+        if (err.name === "AbortError") {
+            return res.status(504).json({ error: "Request timeout, coba lagi" })
+        }
         return res.status(500).json({ error: err.message })
     }
 }
