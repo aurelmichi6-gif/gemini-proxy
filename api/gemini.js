@@ -25,7 +25,7 @@ export default async function handler(req, res) {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "minimaxai/minimax-m2.7",
+                    model: "minimaxai/minimax-m2.5",
                     messages: [{
                         role: "user",
                         content: systemPrompt + " " + question
