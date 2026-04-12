@@ -25,15 +25,16 @@ export default async function handler(req, res) {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "minimaxai/minimax-m2.7",
+                    model: "google/gemma-4-31b-it",
                     messages: [{
                         role: "user",
                         content: systemPrompt + " " + question
                     }],
-                    max_tokens: 8192,
-                    temperature: 1,
+                    max_tokens: 300,
+                    temperature: 1.00,
                     top_p: 0.95,
-                    stream: false
+                    stream: false,
+                    chat_template_kwargs: { enable_thinking: false }
                 }),
                 signal: controller.signal
             }
