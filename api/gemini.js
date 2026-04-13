@@ -25,14 +25,16 @@ export default async function handler(req, res) {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "minimaxai/minimax-m2.5",
+                    model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [{
                         role: "user",
                         content: systemPrompt + " " + question
                     }],
-                    max_tokens: 8192,
-                    temperature: 1,
-                    top_p: 0.95,
+                    max_tokens: 512,
+                    temperature: 1.00,
+                    top_p: 1.00,
+                    frequency_penalty: 0.00,
+                    presence_penalty: 0.00,
                     stream: false
                 }),
                 signal: controller.signal
