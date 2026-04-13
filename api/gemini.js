@@ -25,14 +25,15 @@ export default async function handler(req, res) {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "meta/llama-3.3-70b-instruct",
+                    model: "mistralai/mistral-small-4-119b-2603",
+                    reasoning_effort: "high",
                     messages: [{
                         role: "user",
                         content: systemPrompt + " " + question
                     }],
-                    max_tokens: 1024,
-                    temperature: 0.2,
-                    top_p: 0.7,
+                    max_tokens: 16384,
+                    temperature: 0.10,
+                    top_p: 1.00,
                     stream: false
                 }),
                 signal: controller.signal
