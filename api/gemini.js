@@ -26,7 +26,7 @@ export default async function handler(req, res) {
                 },
                 body: JSON.stringify({
                     model: "mistralai/mistral-small-4-119b-2603",
-                    reasoning_effort: "high",
+                    reasoning_effort: "none",
                     messages: [{
                         role: "user",
                         content: systemPrompt + " " + question
