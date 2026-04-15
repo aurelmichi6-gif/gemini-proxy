@@ -31,7 +31,7 @@ export default async function handler(req, res) {
                         role: "user",
                         content: systemPrompt + " " + question
                     }],
-                    max_tokens: 16384,
+                    max_tokens: 1000,
                     temperature: 0.10,
                     top_p: 1.00,
                     stream: false
