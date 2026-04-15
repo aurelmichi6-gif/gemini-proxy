@@ -29,7 +29,7 @@ export default async function handler(req, res) {
                         ...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []),
                         { role: "user", content: question }
                     ],
-                    max_tokens: 1000,
+                    max_tokens: 16384,
                     temperature: 0.10,
                     top_p: 1.00,
                     stream: false
