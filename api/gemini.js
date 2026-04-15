@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
     const systemPrompt = customPrompt
         ? customPrompt
-        : "Answer this question with short, direct, clear, on-topic answers:"
+        : ""
 
     try {
         const controller = new AbortController()
