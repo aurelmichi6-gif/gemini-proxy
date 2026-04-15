@@ -30,8 +30,8 @@ export default async function handler(req, res) {
                         { role: "user", content: question }
                     ],
                     max_tokens: 16384,
-                    temperature: 0.70,
-                    top_p: 0.90,
+                    temperature: 0.10,
+                    top_p: 1.00,
                     stream: false
                 }),
                 signal: controller.signal
