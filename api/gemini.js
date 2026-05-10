@@ -24,16 +24,17 @@ export default async function handler(req, res) {
                     "Accept": "text/event-stream"
                 },
                 body: JSON.stringify({
-                    model: "moonshotai/kimi-k2.6",
+                    model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [
                         ...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []),
                         { role: "user", content: question }
                     ],
-                    max_tokens: 150,
-                    temperature: 0.20,
+                    max_tokens: 512,
+                    temperature: 1.00,
                     top_p: 1.00,
-                    stream: true,
-                    chat_template_kwargs: { thinking: false }
+                    frequency_penalty: 0.00,
+                    presence_penalty: 0.00,
+                    stream: true
                 }),
                 signal: controller.signal
             }
