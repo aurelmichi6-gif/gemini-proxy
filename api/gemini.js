@@ -24,15 +24,16 @@ export default async function handler(req, res) {
                     "Accept": "text/event-stream"
                 },
                 body: JSON.stringify({
-                    model: "deepseek-ai/deepseek-v4-pro",
+                    model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [
                         ...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []),
                         { role: "user", content: question }
                     ],
-                    temperature: 1,
-                    top_p: 0.95,
-                    max_tokens: 16384,
-                    extra_body: { chat_template_kwargs: { thinking: false } },
+                    max_tokens: 512,
+                    temperature: 1.00,
+                    top_p: 1.00,
+                    frequency_penalty: 0.00,
+                    presence_penalty: 0.00,
                     stream: true
                 }),
                 signal: controller.signal
@@ -46,7 +47,6 @@ export default async function handler(req, res) {
             return res.status(response.status).json({ error: "NVIDIA API error", raw: errData })
         }
 
-        // Collect semua stream chunks jadi satu string
         const reader = response.body.getReader()
         const decoder = new TextDecoder()
         let fullAnswer = ""
