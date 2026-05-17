@@ -2,8 +2,8 @@ export default async function handler(req, res) {
     const apiKey = process.env.NVIDIA_API_KEY
     const rawQuestion = req.method === "POST" ? req.body?.question : req.query?.question
     const customPrompt = req.method === "POST" ? req.body?.prompt : req.query?.prompt
-
     const question = rawQuestion ? decodeURIComponent(rawQuestion.replace(/\+/g, " ")) : null
+
     if (!question) {
         return res.status(400).json({ error: "No question provided" })
     }
@@ -24,16 +24,14 @@ export default async function handler(req, res) {
                     "Accept": "text/event-stream"
                 },
                 body: JSON.stringify({
-                    model: "meta/llama-4-maverick-17b-128e-instruct",
+                    model: "minimaxai/minimax-m2.7",
                     messages: [
                         ...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []),
                         { role: "user", content: question }
                     ],
-                    max_tokens: 512,
-                    temperature: 1.00,
-                    top_p: 1.00,
-                    frequency_penalty: 0.00,
-                    presence_penalty: 0.00,
+                    temperature: 1,
+                    top_p: 0.95,
+                    max_tokens: 8192,
                     stream: true
                 }),
                 signal: controller.signal
@@ -54,15 +52,12 @@ export default async function handler(req, res) {
         while (true) {
             const { done, value } = await reader.read()
             if (done) break
-
             const chunk = decoder.decode(value, { stream: true })
             const lines = chunk.split("\n")
-
             for (const line of lines) {
                 if (!line.startsWith("data: ")) continue
                 const data = line.slice(6).trim()
                 if (data === "[DONE]") break
-
                 try {
                     const parsed = JSON.parse(data)
                     const content = parsed.choices?.[0]?.delta?.content
