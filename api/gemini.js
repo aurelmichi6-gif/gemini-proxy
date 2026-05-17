@@ -45,9 +45,13 @@ export default async function handler(req, res) {
             return res.status(response.status).json({ error: "NVIDIA API error", raw: errData })
         }
 
+        // Stream langsung ke client
+        res.setHeader("Content-Type", "text/event-stream")
+        res.setHeader("Cache-Control", "no-cache")
+        res.setHeader("Connection", "keep-alive")
+
         const reader = response.body.getReader()
         const decoder = new TextDecoder()
-        let fullAnswer = ""
 
         while (true) {
             const { done, value } = await reader.read()
@@ -57,22 +61,24 @@ export default async function handler(req, res) {
             for (const line of lines) {
                 if (!line.startsWith("data: ")) continue
                 const data = line.slice(6).trim()
-                if (data === "[DONE]") break
+                if (data === "[DONE]") {
+                    res.write("data: [DONE]\n\n")
+                    res.end()
+                    return
+                }
                 try {
                     const parsed = JSON.parse(data)
                     const content = parsed.choices?.[0]?.delta?.content
-                    if (content) fullAnswer += content
+                    if (content) {
+                        res.write(`data: ${JSON.stringify({ text: content })}\n\n`)
+                    }
                 } catch {
                     // skip malformed chunk
                 }
             }
         }
 
-        if (!fullAnswer) {
-            return res.status(500).json({ error: "No answer returned" })
-        }
-
-        return res.status(200).json({ answer: fullAnswer })
+        res.end()
 
     } catch (err) {
         if (err.name === "AbortError") {
