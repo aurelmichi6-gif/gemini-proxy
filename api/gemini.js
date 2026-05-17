@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer + apiKey,
+                    "Authorization": "Bearer " + apiKey,
                     "Accept": "text/event-stream"
                 },
                 body: JSON.stringify({
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
                     ],
                     temperature: 1,
                     top_p: 0.95,
-                    max_tokens: 8192,
+                    max_tokens: 512,
                     stream: true
                 }),
                 signal: controller.signal
