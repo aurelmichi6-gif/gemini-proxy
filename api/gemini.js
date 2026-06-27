@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-    const apiKey = process.env.MINIMAX_API_KEY
+    const apiKey = process.env.NVIDIA_API_KEY
     const rawQuestion = req.method === "POST" ? req.body?.question : req.query?.question
     const customPrompt = req.method === "POST" ? req.body?.prompt : req.query?.prompt
     const question = rawQuestion ? decodeURIComponent(rawQuestion.replace(/\+/g, " ")) : null
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         const controller = new AbortController()
         const timeout = setTimeout(() => controller.abort(), 55000)
         const response = await fetch(
-            "https://api.minimax.chat/v1/text/chatcompletion_v2",
+            "https://integrate.api.nvidia.com/v1/chat/completions",
             {
                 method: "POST",
                 headers: {
@@ -20,13 +20,13 @@ export default async function handler(req, res) {
                     "Accept": "text/event-stream"
                 },
                 body: JSON.stringify({
-                    model: "MiniMax-M3",
+                    model: "meta/llama-4-maverick-17b-128e-instruct",
                     messages: [
                         ...(systemPrompt ? [{ role: "system", content: systemPrompt }] : []),
                         { role: "user", content: question }
                     ],
                     temperature: 1,
-                    top_p: 0.95,
+                    top_p: 1,
                     max_tokens: 8192,
                     stream: true
                 }),
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         clearTimeout(timeout)
         if (!response.ok) {
             const errData = await response.json()
-            return res.status(response.status).json({ error: "MiniMax API error", raw: errData })
+            return res.status(response.status).json({ error: "NVIDIA API error", raw: errData })
         }
         const reader = response.body.getReader()
         const decoder = new TextDecoder()
